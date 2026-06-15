@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>فضل عبدالله مثنى الشعيبي | المطور الأول لمشاريع المستقبل التقنية</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-main: #02040a;
+            --bg-secondary: #070b14;
+            --accent-cyan: #00f2ff;
+            --accent-purple: #9d4edd;
+            --accent-gold: #ffb703;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(7, 11, 20, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+            --mouse-x: 0px;
+            --mouse-y: 0px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-light);
+            overflow-x: hidden;
+            overflow-y: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(0, 242, 255, 0.05), transparent 50%),
+                radial-gradient(circle at 10% 90%, rgba(157, 78, 221, 0.04), transparent 40%);
+            background-attachment: fixed;
+            transition: background 0.5s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        @keyframes cyberPulse { 0%, 100% { filter: drop-shadow(0 0 15px rgba(0,242,255,0.4)); } 50% { filter: drop-shadow(0 0 30px rgba(157,78,221,0.6)); } }
+        @keyframes borderGlow { 0%, 100% { border-color: var(--glass-border); } 50% { border-color: var(--accent-cyan); } }
+        @keyframes laserScan { 0% { left: -100%; } 100% { left: 100%; } }
+        @keyframes spinWave { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* ---------------- شاشة تسجيل الدخول ---------------- */
+        #loginOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(2, 4, 10, 0.98); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            z-index: 10005; display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        .login-box {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border-radius: 24px; border: 1px solid var(--glass-border); padding: 50px 40px; 
+            box-shadow: var(--glass-shadow); text-align: center; width: 90%; max-width: 440px;
+            position: relative; overflow: hidden;
+        }
+        .login-box::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            animation: laserScan 3s linear infinite;
+        }
+        .login-logo { font-size: 3.5rem; color: var(--accent-cyan); margin-bottom: 20px; animation: floating 4s ease-in-out infinite, cyberPulse 3s infinite; }
+        .login-box h2 { margin-bottom: 10px; font-weight: 900; background: linear-gradient(90deg, #fff, var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .login-subtitle { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 30px; }
+        .input-group { margin-bottom: 25px; position: relative; }
+        .input-group i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .login-input { width: 100%; padding: 16px 45px 16px 16px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; color: #fff; font-family: 'Tajawal'; transition: 0.3s; text-align: right; }
+        .login-input:focus { outline: none; border-color: var(--accent-cyan); box-shadow: 0 0 15px rgba(0, 242, 255, 0.25); }
+        .login-btn { width: 100%; padding: 16px; background: linear-gradient(45deg, var(--accent-cyan), #0062ff); border: none; border-radius: 12px; color: #000; font-weight: 900; cursor: pointer; transition: 0.3s; }
+        .login-btn:hover { filter: brightness(1.2); box-shadow: 0 0 20px rgba(0, 242, 255, 0.4); }
+        .login-msg { margin-top: 25px; font-size: 1.1rem; font-weight: bold; min-height: 28px; line-height: 1.5; }
+
+        /* ---------------- المؤقت المائي ---------------- */
+        #waterTimerOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(2, 4, 10, 0.99); z-index: 10010; display: none; justify-content: center; align-items: center; flex-direction: column;
+        }
+        .glass-orb {
+            width: 210px; height: 210px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.15);
+            box-shadow: var(--glass-shadow), inset 0 0 45px rgba(0, 242, 255, 0.25); position: relative; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .water-wave {
+            position: absolute; bottom: 0; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 38%; animation: spinWave 3s linear infinite; transition: top 1s linear; top: 100%;
+        }
+        .timer-number { position: relative; z-index: 10; font-size: 5.5rem; font-weight: 900; color: #fff; font-family: 'Fira Code'; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .timer-label { margin-top: 30px; font-size: 1.3rem; color: var(--accent-cyan); text-shadow: 0 0 12px var(--accent-cyan); text-align: center; padding: 0 20px; }
+
+        /* ---------------- الهيدر الثابت المعزز ---------------- */
+        #mainContent { opacity: 0; transition: opacity 0.8s ease; display: flex; flex-direction: column; min-height: 100vh; }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 10000;
+            background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border); padding: 18px 8%; display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-size: 1.6rem; font-weight: 900; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 12px; }
+        .logo i { color: var(--accent-cyan); font-size: 2.2rem; filter: drop-shadow(0 0 10px rgba(0,242,255,0.5)); }
+        .logo-sub { font-size: 0.75rem; color: var(--text-muted); display: block; font-weight: 400; margin-top: 2px; }
+        
+        .nav-links { display: flex; gap: 10px; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 700; padding: 12px 20px; border-radius: 10px; transition: 0.2s; font-size: 0.95rem; display: inline-flex; align-items: center; }
+        .nav-links a:hover, .nav-links a.active-nav { color: #fff; background: rgba(0, 242, 255, 0.08); border: 1px solid rgba(0,242,255,0.2); }
+        
+        .menu-btn { display: none; font-size: 1.9rem; color: var(--accent-cyan); cursor: pointer; padding: 10px; z-index: 10002; }
+
+        /* نظام إرشاد الزوار الفائق للجوال */
+        .menu-hint { display: none; }
+
+        /* ---------------- محرك الصفحات ثنائي الأبعاد المستقر ---------------- */
+        .page {
+            display: none; padding: 140px 8% 80px; min-height: calc(100vh - 80px);
+            opacity: 0; transform: translateY(15px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .page.active-page { display: flex; flex-direction: column; opacity: 1; transform: translateY(0); }
+
+        #home-page { flex-direction: row; align-items: center; justify-content: space-between; gap: 60px; }
+        .hero-content { flex: 1.3; }
+        .exclusive-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,183,3,0.1); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 8px 16px; border-radius: 30px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; }
+        .hero-content h2 { font-size: 3.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 25px; }
+        .typewriter-container { background: rgba(0,0,0,0.5); padding: 14px 22px; border-radius: 12px; border-right: 4px solid var(--accent-cyan); display: inline-block; margin-bottom: 30px; }
+        .typewriter { font-family: 'Fira Code'; color: var(--accent-cyan); font-size: 1.35rem; font-weight: 500; }
+        .hero-desc { font-size: 1.1rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 35px; max-width: 700px; }
+        
+        .btn-group { display: flex; gap: 20px; }
+        .btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 35px; border-radius: 30px; font-weight: bold; text-decoration: none; transition: 0.2s; cursor: pointer; border: none; font-size: 1rem; }
+        .btn-primary { background: linear-gradient(45deg, var(--accent-cyan), #0062ff); color: #000; box-shadow: 0 12px 25px rgba(0, 242, 255, 0.25); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 242, 255, 0.4); }
+        .btn-secondary { background: rgba(157, 78, 221, 0.1); color: #fff; border: 1px solid var(--accent-purple); }
+        .btn-secondary:hover { background: rgba(157, 78, 221, 0.25); transform: translateY(-3px); }
+
+        .hero-visual { flex: 0.7; }
+        .terminal-box { 
+            background: rgba(4, 7, 18, 0.95); border: 1px solid var(--glass-border); border-radius: 24px; padding: 35px; 
+            box-shadow: var(--glass-shadow); font-family: 'Fira Code'; font-size: 0.85rem; line-height: 1.8;
+            animation: borderGlow 4s infinite;
+        }
+        .term-header { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; }
+        .term-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .term-dot.r { background: #ff5f56; } .term-dot.y { background: #ffbd2e; } .term-dot.g { background: #27c93f; }
+
+        .manifesto-section { background: linear-gradient(135deg, rgba(7,11,20,0.6), rgba(157,78,221,0.05)); border: 1px solid rgba(157,78,221,0.2); border-radius: 28px; padding: 45px; margin-top: 50px; }
+        .manifesto-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .manifesto-header i { font-size: 2.5rem; color: var(--accent-purple); filter: drop-shadow(0 0 10px var(--accent-purple)); }
+        .manifesto-header h3 { font-size: 1.8rem; font-weight: 900; color: #fff; }
+        .manifesto-p { font-size: 1.1rem; line-height: 1.9; color: var(--text-light); }
+
+        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .skill-card { background: rgba(10, 15, 30, 0.4); border: 1px solid var(--glass-border); border-radius: 24px; padding: 40px; transition: all 0.3s ease; }
+        .skill-card:hover { border-color: var(--accent-cyan); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0, 242, 255, 0.1); }
+        .skill-card i { font-size: 3rem; color: var(--accent-cyan); margin-bottom: 25px; }
+        .skill-card h3 { font-size: 1.6rem; color: #fff; margin-bottom: 15px; }
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .tech-tags span { background: rgba(255,255,255,0.04); padding: 6px 14px; border-radius: 8px; font-size: 0.85rem; color: #fff; border: 1px solid rgba(255,255,255,0.03); }
+
+        .articles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; transition: all 0.4s ease; }
+        .articles-grid.focus-active .article-card:not(.focused) { opacity: 0; transform: scale(0.9); pointer-events: none; }
+        .article-card { background: rgba(10, 15, 30, 0.4); border: 1px solid var(--glass-border); border-radius: 26px; overflow: hidden; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); display: flex; flex-direction: column; }
+        .article-card:hover:not(.focused) { transform: translateY(-8px); border-color: var(--accent-purple); }
+        .article-img { width: 100%; height: 230px; overflow: hidden; position: relative; transition: height 0.4s ease; }
+        .article-img img { width: 100%; height: 100%; object-fit: cover; }
+        .article-body { padding: 35px; flex: 1; display: flex; flex-direction: column; }
+        .article-body h3 { font-size: 1.45rem; color: #fff; margin-bottom: 15px; font-weight: 700; }
+        .article-body p { color: var(--text-muted); font-size: 0.98rem; line-height: 1.8; margin-bottom: 25px; flex: 1; }
+        .expanded-content { display: none; opacity: 0; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px; color: #cbd5e1; line-height: 1.9; font-size: 1.05rem; transition: opacity 0.3s ease; }
+        .article-card.focused { position: fixed; top: 100px; left: 5%; right: 5%; bottom: 30px; z-index: 10001; background: rgba(4, 8, 18, 0.99); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-color: var(--accent-cyan); border-radius: 32px; box-shadow: 0 0 100px rgba(0, 242, 255, 0.25); overflow-y: auto; }
+        .article-card.focused .article-img { height: 320px; }
+        .article-card.focused .expanded-content { display: block; opacity: 1; }
+        .read-btn { background: rgba(0, 242, 255, 0.05); color: var(--accent-cyan); border: 1px solid rgba(0, 242, 255, 0.2); padding: 14px 26px; border-radius: 14px; font-weight: bold; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; }
+        .read-btn:hover { background: var(--accent-cyan); color: #000; box-shadow: 0 0 15px var(--accent-cyan); }
+
+        .about-wrapper { display: flex; gap: 50px; }
+        .about-sidebar { flex: 0.9; background: rgba(5,8,20,0.5); padding: 45px; border-radius: 26px; border: 1px solid var(--glass-border); text-align: center; height: fit-content; }
+        .avatar-box { width: 140px; height: 140px; margin: 0 auto 25px; border-radius: 50%; border: 2px dashed var(--accent-cyan); display: flex; justify-content: center; align-items: center; font-size: 4rem; animation: spinWave 25s linear infinite; color: var(--accent-cyan); }
+        .about-main { flex: 2; }
+        .bio-segment { background: rgba(255,255,255,0.01); border-right: 5px solid var(--accent-cyan); padding: 30px; border-radius: 0 16px 16px 0; margin-bottom: 35px; line-height: 1.9; font-size: 1.15rem; }
+        
+        .future-goals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; margin-top: 30px; }
+        .goal-card { background: rgba(157,78,221,0.03); border: 1px solid rgba(157,78,221,0.15); padding: 30px; border-radius: 20px; transition: 0.2s; }
+        .goal-card:hover { border-color: var(--accent-cyan); background: rgba(0,242,255,0.02); transform: translateY(-4px); }
+        .goal-card i { font-size: 2.2rem; color: var(--accent-cyan); margin-bottom: 15px; display: block; }
+        .goal-card h4 { font-size: 1.3rem; margin-bottom: 10px; color: #fff; }
+        .goal-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 35px; }
+        .stat-card { background: rgba(0,0,0,0.5); padding: 22px 10px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.02); }
+        .stat-card .num { font-size: 2rem; font-weight: 900; color: #fff; font-family: 'Fira Code'; display: block; margin-bottom: 5px; }
+
+        .contact-container { max-width: 700px; margin: 0 auto; text-align: center; }
+        .social-matrix { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-top: 40px; }
+        .matrix-link { display: flex; align-items: center; gap: 20px; padding: 25px; background: rgba(10,15,30,0.5); border: 1px solid var(--glass-border); border-radius: 20px; text-decoration: none; color: #fff; transition: 0.2s; }
+        .matrix-link:hover { box-shadow: var(--glass-shadow); border-color: var(--accent-cyan); background: rgba(0,242,255,0.03); transform: translateY(-3px); }
+
+        footer { margin-top: auto; background: #010204; border-top: 1px solid rgba(255,255,255,0.03); padding: 35px 8%; display: flex; justify-content: space-between; align-items: center; }
+        footer p { color: var(--text-muted); font-size: 0.95rem; }
+
+        .sidebar-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            z-index: 9995; display: none; opacity: 0; transition: opacity 0.3s ease;
+        }
+
+        /* ---------------- دعم شاشات الجوال بالكامل وبأعلى كفاءة رندرة ---------------- */
+        @media (max-width: 968px) {
+            header { padding: 15px 5%; }
+            .menu-btn { display: block; }
+            
+            /* تصميم وتهيئة إرشاد الزوار التفاعلي (معدل لحل مشكلة الاتجاه) */
+            .menu-hint {
+                display: flex;
+                flex-direction: row; /* يضمن ظهور السهم في أقصى اليسار ليتوافق مع زر القائمة */
+                align-items: center;
+                gap: 12px;
+                position: absolute;
+                top: 75px;
+                left: 3%;
+                background: rgba(7, 11, 20, 0.95);
+                border: 1px solid var(--accent-cyan);
+                color: #fff;
+                padding: 10px 18px;
+                border-radius: 30px;
+                font-size: 0.85rem;
+                font-weight: 700;
+                z-index: 10001;
+                box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+                pointer-events: none;
+                opacity: 0;
+                transform: translateY(-10px);
+                transition: opacity 0.5s ease, transform 0.5s ease;
+            }
+            .menu-hint.visible {
+                opacity: 1;
+                transform: translateY(0);
+                animation: hintPulse 2.5s infinite ease-in-out;
+            }
+
+            .nav-links { 
+                position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+                background: rgba(7, 11, 20, 0.98); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+                flex-direction: column; padding: 100px 25px; 
+                transition: right 0.35s cubic-bezier(0.77, 0, 0.175, 1); 
+                border-left: 1px solid rgba(0,242,255,0.2);
+                box-shadow: -15px 0 40px rgba(0,0,0,0.8);
+                gap: 15px;
+                z-index: 9999;
+                align-items: flex-start;
+            }
+            .nav-links.active { right: 0; }
+            .nav-links li { width: 100%; }
+            .nav-links a { display: flex; width: 100%; padding: 15px; text-align: right; border-radius: 12px; font-size: 1rem; color: #fff; }
+
+            .page { padding: 150px 6% 60px; }
+            #home-page { flex-direction: column; text-align: center; gap: 40px; }
+            .hero-content h2 { font-size: 2.6rem; }
+            .btn-group { justify-content: center; flex-wrap: wrap; }
+            .about-wrapper { flex-direction: column; }
+            .social-matrix { grid-template-columns: 1fr; }
+            .article-card.focused { top: 90px; left: 3%; right: 3%; bottom: 15px; border-radius: 20px; }
+        }
+
+        @keyframes hintPulse {
+            0%, 100% { transform: translateY(0); box-shadow: 0 0 15px rgba(0, 242, 255, 0.3); }
+            50% { transform: translateY(5px); box-shadow: 0 0 25px rgba(0, 242, 255, 0.6); border-color: var(--accent-purple); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMenu()"></div>
+
+    <!-- واجهة تسجيل الدخول -->
+    <div id="loginOverlay">
+        <div class="login-box">
+            <i class="fa-solid fa-fingerprint login-logo"></i>
+            <h2>فضل عبدالله مثنى الشعيبي</h2>
+            <p class="login-subtitle">أول مطور يمني يحمل مشاريع تقنية عملاقة للمستقبل</p>
+            <div class="input-group">
+                <input type="text" id="usernameInput" class="login-input" placeholder="هوية المطور المركزي" value="">
+                <i class="fa-solid fa-user-astronaut"></i>
+            </div>
+            <div class="input-group">
+                <input type="password" id="passwordInput" class="login-input" placeholder="رمز الحماية الفائق" value="">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <button class="login-btn" onclick="checkLogin()">بدء المعالجة والولوج الحركي <i class="fa-solid fa-terminal"></i></button>
+            <div id="loginMessage" class="login-msg"></div>
+        </div>
+    </div>
+
+    <!-- المؤقت المائي الزجاجي -->
+    <div id="waterTimerOverlay">
+        <div class="glass-orb">
+            <div class="water-wave" id="waterLevel"></div>
+            <div class="timer-number" id="timerDisplay">5</div>
+        </div>
+        <div class="timer-label">جاري استدعاء مصفوفات البُعد الرابع وتشفير خوارزميات الاستثمار...</div>
+    </div>
+
+    <!-- البنية الأساسية للموقع -->
+    <div id="mainContent">
+        <header id="siteHeader">
+            <a href="#" class="logo" onclick="navigateTo('home')">
+                <i class="fa-solid fa-brain"></i>
+                <div>
+                    <span>فضل الشعيبي</span>
+                    <span class="logo-sub">FUTURE ARCHITECT</span>
+                </div>
+            </a>
+            
+            <!-- زر الكنترول المحمي والبارز برمجياً فوق أي طبقات -->
+            <i class="fa-solid fa-bars menu-btn" onclick="toggleMenu()" id="menuToggleIcon"></i>
+            
+            <!-- إرشاد التنقل الذكي للجوال (معدل لحل مشكلة الاتجاه) -->
+            <div class="menu-hint" id="menuHint">
+                <span>للتنقل بين الصفحات، اضغط هنا</span>
+                <i class="fa-solid fa-arrow-up fa-bounce" style="color: var(--accent-cyan); font-size: 1.3rem;"></i> 
+            </div>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" id="nav-home" class="active-nav" onclick="navigateTo('home')"><i class="fa-solid fa-house" style="margin-left:8px;"></i>الرئيسية الفائقة</a></li>
+                <li><a href="#" id="nav-skills" onclick="navigateTo('skills')"><i class="fa-solid fa-gear" style="margin-left:8px;"></i>القدرات والسيادة</a></li>
+                <li><a href="#" id="nav-articles" onclick="navigateTo('articles')"><i class="fa-solid fa-book" style="margin-left:8px;"></i>المكتبة البرمجية</a></li>
+                <li><a href="#" id="nav-about" onclick="navigateTo('about')"><i class="fa-solid fa-bullseye" style="margin-left:8px;"></i>الأهداف العالمية</a></li>
+                <li><a href="#" id="nav-contact" onclick="navigateTo('contact')"><i class="fa-solid fa-envelope" style="margin-left:8px;"></i>مصفوفة الاتصال</a></li>
+            </ul>
+        </header>
+
+        <!-- 1. الرئيسية -->
+        <main id="home-page" class="page active-page">
+            <div class="hero-content">
+                <div class="exclusive-badge"><i class="fa-solid fa-earth-americas"></i> رؤية كونية عابرة للحدود</div>
+                <h2>فضل عبدالله مثنى الشعيبي<br><span style="color:var(--accent-cyan)">صانع الأنظمة المستقبلية.</span></h2>
+                
+                <div class="typewriter-container">
+                    <span class="typewriter" id="typeText"></span>
+                </div>
+                
+                <p class="hero-desc">
+                    مرحباً بك في المنصة السيبرانية للمطور <strong>فضل الشعيبي</strong>، أول مطور يمني يحمل مشاريع تقنية عملاقة للمستقبل. هنا حيث تلتقي الأكواد الهندسية الفائقة بالطموح الاستثماري اللامحدود لإعادة هيكلة العالم الرقمي.
+                </p>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="navigateTo('about')"><i class="fa-solid fa-compass"></i> خارطة الطريق العالمية</button>
+                    <button class="btn btn-secondary" onclick="navigateTo('articles')"><i class="fa-solid fa-code-branch"></i> تصفح الأبحاث والمقالات</button>
+                </div>
+
+                <div class="manifesto-section">
+                    <div class="manifesto-header">
+                        <i class="fa-solid fa-bolt"></i>
+                        <h3>فلسفة السيادة الرقمية والذكاء الاصطناعي</h3>
+                    </div>
+                    <p class="manifesto-p">
+                        نحن لا نبني مجرد تطبيقات تقليدية؛ إن إيماني المطلق يرتكز على حقيقة حتمية واحدة: <strong>الذكاء الاصطناعي والبرمجيات الفائقة هي التي ستحكم العالم وتدير مقدراته</strong>. من يمتلك الشفرة البرمجية اليوم، يمتلك مفاتيح توجيه الغد والمستقبل الاستثماري الكلي.
+                    </p>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="terminal-box">
+                    <div class="term-header">
+                        <div class="term-dot r"></div>
+                        <div class="term-dot y"></div>
+                        <div class="term-dot g"></div>
+                    </div>
+                    <div style="color: #a5d6ff;">
+                        <span class="term-comment">// بيان المطور فضل الشعيبي للمستقبل</span><br>
+                        <span class="term-keyword">const</span> developer = {<br>
+                          name: <span class="term-string">"فضل عبدالله مثنى الشعيبي"</span>,<br>
+                          status: <span class="term-string">"الأول في اليمن لمشاريع المستقبل"</span>,<br>
+                          coreBelief: <span class="term-string">"البرمجيات والذكاء الاصطناعي سيحكمون العالم"</span>,<br>
+                          globalGoal: <span class="term-string">"تأسيس شركة تقنية عملاقة + السفر حول العالم"</span><br>
+                        };<br><br>
+                        <span class="term-keyword">if</span> (developer.projects === <span class="term-string">"Giant"</span>) {<br>
+                          <span style="color:#d2a8ff;">executeGlobalExpansion</span>();<br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 2. القدرات -->
+        <div id="skills-page" class="page">
+            <div class="skills-container">
+                <div class="skill-card">
+                    <i class="fa-solid fa-robot"></i>
+                    <h3>أنظمة الذكاء الاصطناعي والأتمتة</h3>
+                    <p>هندسة خوارزميات ذكية قادرة على اتخاذ القرارات وتحليل البيانات الضخمة، لإيماني الكامل بأن الأتمتة والبرمجيات هي الحاكم المستقبلي للاقتصاد الكوني.</p>
+                    <div class="tech-tags"><span>AI Domination</span><span>Neural Networks</span><span>Automated Trading</span></div>
+                </div>
+                <div class="skill-card">
+                    <i class="fa-solid fa-microchip"></i>
+                    <h3>دمج وابتكار العتاد والأجهزة الذكية</h3>
+                    <p>صناعة النماذج التقنية المتقدمة ودمج مستشعرات التصوير الضخمة وحجرات الصوت المحيطي باللوحات الإلكترونية لبناء أجهزة ذكية متكاملة وجذابة للمستثمرين.</p>
+                    <div class="tech-tags"><span>Hardware Engineering</span><span>Acoustic Cavities</span><span>Camera Sensors</span></div>
+                </div>
+                <div class="skill-card">
+                    <i class="fa-solid fa-globe"></i>
+                    <h3>بناء الإمبراطوريات البرمجية الويب الشاملة</h3>
+                    <p>تطوير البُنى التحتية للمواقع والمنصات المعقدة ثنائية وثلاثية الأبعاد القادرة على تحمل ملايين العمليات المتزامنة حول العالم.</p>
+                    <div class="tech-tags"><span>Next-Gen FullStack</span><span>Cyber Security</span><span>Cloud Scaling</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. المكتبة والمقالات -->
+        <div id="articles-page" class="page">
+            <div class="articles-grid" id="articlesGrid">
+                <div class="article-card" id="article-1">
+                    <div class="article-img"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80"></div>
+                    <div class="article-body">
+                        <h3>تأثير الحوسبة الكمية على خوارزميات التشفير الحالية</h3>
+                        <p>دراسة تحليلية دقيقة حول كيفية صمود أنظمة التشفير الحالية في مواجهة قوة المعالجة الفائقة للحواسيب الكمية القادمة وكيفية الاستعداد لها.</p>
+                        <div class="expanded-content">
+                            <h4>تفكيك التشفير الكمي ومستقبل حماية البيانات:</h4>
+                            <p>إن الحوسبة الكمية لا تمثل مجرد زيادة في سرعة المعالجة، بل هي إعادة تعريف شاملة لقوانين الحساب الرياضي. الخوارزميات الحالية مثل RSA تعتمد على صعوبة تحليل الأعداد الأولية الكبيرة، وهو أمر تستطيع خوارزمية "شور" (Shor's Algorithm) الكمية تفكيكه في ثوانٍ معدودة.</p>
+                        </div>
+                        <button class="read-btn" onclick="toggleArticleFocus('article-1')"><span>فك التشفير واقرأ</span> <i class="fa-solid fa-fingerprint"></i></button>
+                    </div>
+                </div>
+
+                <div class="article-card" id="article-2">
+                    <div class="article-img"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80"></div>
+                    <div class="article-body">
+                        <h3>استراتيجيات تطوير الأجهزة الذكية الثورية وجذب الاستثمارات</h3>
+                        <p>دليل هندسي شامل حول آليات دمج مستشعرات الكاميرات الضخمة والأنظمة الصوتية المحيطية الجبارة داخل بنية الهواتف الذكية الاستثمارية.</p>
+                        <div class="expanded-content">
+                            <h4>الهندسة العميقة وراء مشروع الهاتف الذكي المستقبلي:</h4>
+                            <p>لجذب رأس المال الجريء والمستثمرين، يجب ألا يكون المنتج مجرد محاكاة للموجود، بل قفزة هندسية فريدة. يرتكز نموذجنا على دمج مستشعرات تصوير ذات أحجام ميكانيكية ضخمة تسمح بدخول الضوء بشكل طبيعي دون الاعتماد الكلي على المعالجة الرقمية.</p>
+                        </div>
+                        <button class="read-btn" onclick="toggleArticleFocus('article-2')"><span>فك التشفير واقرأ</span> <i class="fa-solid fa-fingerprint"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. الأهداف الكبرى والملف التعريفي -->
+        <div id="about-page" class="page">
+            <div class="about-wrapper">
+                <div class="about-sidebar">
+                    <div class="avatar-box"><i class="fa-solid fa-rocket"></i></div>
+                    <h2>فضل عبدالله مثنى الشعيبي</h2>
+                    <p style="color:var(--accent-cyan); font-family:'Fira Code'; font-weight:700; font-size:0.9rem;">< First Yemeni Developer ></p>
+                    <div class="stats-grid">
+                        <div class="stat-card"><span class="num" id="stat1">0</span><span>ساعة تطوير</span></div>
+                        <div class="stat-card"><span class="num" id="stat2">0</span><span>عقدة برمجية</span></div>
+                        <div class="stat-card"><span class="num" id="stat3">0</span><span>هدف عالمي</span></div>
+                    </div>
+                </div>
+                <div class="about-main">
+                    <div class="bio-segment">
+                        <p>أنا المهندس <strong>فضل عبدالله مثنى الشعيبي</strong>، أول مطور يمني يقود ويصمم مشاريع تقنية عملاقة موجهة للمستقبل بالكامل. أؤمن بالدمج الراديكالي والذكي بين البرمجيات والعتاد الفيزيائي، والتحرك بنظرة مستقبلية واثقة لبناء إمبراطوريات تكنولوجية مذهلة.</p>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 20px; font-weight: 900; color:#fff; display:flex; align-items:center; gap:10px;">
+                        <i class="fa-solid fa-map-location-dot" style="color:var(--accent-cyan)"></i> خارطة الأهداف الكبرى والمشاريع العملاقة
+                    </h3>
+                    
+                    <div class="future-goals-grid">
+                        <div class="goal-card">
+                            <i class="fa-solid fa-city"></i>
+                            <h4>تأسيس شركة تقنية عملاقة</h4>
+                            <p>بناء وتأسيس كيان تكنولوجي دولي عملاق يهدف لابتكار حلول برمجية غير مسبوقة وتصنيع عتاد متقدم يستقطب كبرى الاستثمارات ورؤوس الأحوال الجريئة عالمياً.</p>
+                        </div>
+                        <div class="goal-card">
+                            <i class="fa-solid fa-plane-departure"></i>
+                            <h4>السفر والتوسع حول العالم</h4>
+                            <p>الانطلاق والسفر حول القارات لبناء شبكة علاقات تقنية واستثمارية دولية، والاطلاع على أحدث ما توصلت إليه مراكز الابتكار، ونقل التكنولوجيا وإدارتها من أي مكان في العالم.</p>
+                        </div>
+                        <div class="goal-card">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <h4>حتمية حكم البرمجيات للكون</h4>
+                            <p>ترتكز خطتنا التشغيلية على تطويع خوارزميات الذكاء الاصطناعي المعقدة لخدمة أهداف الشركة، واليقين التام بأن الشفرة البرمجية والذكاء الاصطناعي هما الحاكمان الفعليان للعالم غداً.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. قنوات الاتصال -->
+        <div id="contact-page" class="page">
+            <div class="contact-container">
+                <i class="fa-solid fa-satellite-dish" style="font-size: 4rem; color: var(--accent-cyan); margin-bottom: 30px; animation: floating 3s infinite;"></i>
+                <h3 style="margin-bottom: 15px; font-size: 1.8rem; font-weight:900;">افتح قنوات الاتصال والتنسيق الاستثماري</h3>
+                <div class="social-matrix">
+                    <a href="https://www.instagram.com/bu_69r?igsh=MWM1cWV6ZGlrbHM0dQ==" target="_blank" class="matrix-link"><i class="fa-brands fa-instagram" style="color:#E1306C"></i><div><h4>إنستغرام</h4><p>التفاعل اليومي والمباشر</p></div></a>
+                    <a href="https://wa.me/966579317040" target="_blank" class="matrix-link"><i class="fa-brands fa-whatsapp" style="color:#25D366"></i><div><h4>واتساب الفوري</h4><p>نقاشات فورية وعاجلة</p></div></a>
+                    <a href="mailto:fadhlalrubidi@gmail.com" class="matrix-link"><i class="fa-regular fa-envelope" style="color:#EA4335"></i><div><h4>البريد الإلكتروني</h4><p>المراسلات الرسمية والعقود</p></div></a>
+                    <a href="https://maps.app.goo.gl/3GkWf8ssLisxddec8" target="_blank" class="matrix-link"><i class="fa-solid fa-location-crosshairs" style="color:#4285F4"></i><div><h4>تحديد الإحداثيات</h4><p>الموقع الجغرافي المركزي</p></div></a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© <span id="currentYear"></span> <strong>فضل عبدالله مثنى الشعيبي</strong>. جميع الحقوق محفوظة.</p>
+            <p style="font-family:'Fira Code'; color:rgba(255,255,255,0.25);">WORLDWIDE TECH DOMINATION ENGINE V4.6</p>
+        </footer>
+    </div>
+
+    <script>
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+        function initAudio() { if (!audioCtx) audioCtx = new AudioContext(); if (audioCtx.state === 'suspended') audioCtx.resume(); }
+
+        function playTone(freq, type, duration, vol) {
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+                osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function playErrorSound() { playTone(130, 'sawtooth', 0.35, 0.08); setTimeout(()=>playTone(100, 'sawtooth', 0.35, 0.08), 130); }
+        function playSuccessSound() { playTone(480, 'sine', 0.1, 0.07); setTimeout(()=>playTone(700, 'sine', 0.15, 0.07), 80); }
+        function playTickSound() { playTone(950, 'sine', 0.04, 0.03); }
+        function playFinalBeep() { playTone(1400, 'square', 0.4, 0.07); }
+
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('siteHeader');
+            if (window.scrollY > 20) {
+                header.style.boxShadow = "0 10px 30px rgba(0,0,0,0.8)";
+            } else {
+                header.style.boxShadow = "none";
+            }
+        });
+
+        function checkLogin() {
+            initAudio();
+            const user = document.getElementById('usernameInput').value.trim();
+            const pass = document.getElementById('passwordInput').value.trim();
+            const msgBox = document.getElementById('loginMessage');
+
+            if (user === "فضل الشعيبي" && pass === "579317040") {
+                playSuccessSound();
+                // رسالة الترحيب الملكي المُحدثة مع التاج المتحرك 👑
+                msgBox.style.color = "var(--text-light)";
+                msgBox.innerHTML = '<i class="fa-solid fa-crown fa-bounce" style="color: var(--accent-gold); margin-left: 8px; font-size: 1.3rem;"></i> ترحيب ملكي! مرحباً بعودتك أيها القائد...';
+                
+                setTimeout(() => {
+                    document.getElementById('loginOverlay').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('loginOverlay').style.display = 'none';
+                        startWaterTimer();
+                    }, 500);
+                }, 1000); // زدنا الوقت قليلاً لكي تقرأ الترحيب براحتك قبل الدخول
+            } else {
+                playErrorSound();
+                msgBox.style.color = "#ffb703";
+                msgBox.innerHTML = '<i class="fa-regular fa-face-laugh-wink fa-bounce"></i> الرمز أو المعرف خاطئ، ركز فالموضوع مامستاهل تغلط فيه 😂';
+            }
+        }
+
+        function removeMenuHint() {
+            const hint = document.getElementById('menuHint');
+            if (hint) {
+                hint.style.opacity = '0';
+                setTimeout(() => { if(hint) hint.remove(); }, 400);
+            }
+        }
+
+        function startWaterTimer() {
+            const timerOverlay = document.getElementById('waterTimerOverlay');
+            const timerDisplay = document.getElementById('timerDisplay');
+            const waterLevel = document.getElementById('waterLevel');
+            
+            timerOverlay.style.display = 'flex';
+            let count = 5;
+            timerDisplay.innerText = count;
+            waterLevel.style.top = '100%';
+
+            const interval = setInterval(() => {
+                count--;
+                if(count > 0) {
+                    timerDisplay.innerText = count;
+                    playTickSound();
+                    waterLevel.style.top = `${count * 20}%`;
+                } else {
+                    clearInterval(interval);
+                    timerDisplay.innerText = "0";
+                    waterLevel.style.top = '0%';
+                    playFinalBeep();
+                    
+                    setTimeout(() => {
+                        timerOverlay.style.opacity = '0';
+                        setTimeout(() => {
+                            timerOverlay.style.display = 'none';
+                            document.body.style.overflowY = 'auto';
+                            document.getElementById('mainContent').style.opacity = '1';
+                            
+                            // إظهار إرشاد القائمة بعد تحميل الواجهة الرئيسية
+                            setTimeout(() => {
+                                const hint = document.getElementById('menuHint');
+                                if (hint) hint.classList.add('visible');
+                            }, 800);
+
+                            setTimeout(startTypewriter, 300);
+                        }, 500);
+                    }, 600);
+                }
+            }, 1000);
+        }
+
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const overlay = document.getElementById('sidebarOverlay');
+            playTickSound();
+            
+            // إزالة الإرشاد فوراً بمجرد تفاعل المستخدم مع القائمة لأول مرة
+            removeMenuHint();
+
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.style.display = 'none', 300);
+            } else {
+                overlay.style.display = 'block';
+                void overlay.offsetWidth;
+                navLinks.classList.add('active');
+                overlay.style.opacity = '1';
+            }
+        }
+
+        function navigateTo(pageId) {
+            playTickSound();
+            removeMenuHint();
+            
+            document.getElementById('navLinks').classList.remove('active');
+            const overlay = document.getElementById('sidebarOverlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.style.display = 'none', 300);
+
+            const focusedCard = document.querySelector('.article-card.focused');
+            if (focusedCard) {
+                focusedCard.classList.remove('focused');
+                const grid = document.getElementById('articlesGrid');
+                if (grid) grid.classList.remove('focus-active');
+                document.body.style.overflow = 'auto';
+            }
+
+            const activePage = document.querySelector('.page.active-page');
+            const targetPage = document.getElementById(`${pageId}-page`);
+
+            if (activePage === targetPage) return;
+
+            if (activePage) {
+                activePage.style.opacity = '0';
+                activePage.style.transform = 'translateY(15px)';
+                setTimeout(() => {
+                    activePage.classList.remove('active-page');
+                    showTargetPage(targetPage, pageId);
+                }, 300);
+            } else {
+                showTargetPage(targetPage, pageId);
+            }
+        }
+
+        function showTargetPage(targetPage, pageId) {
+            targetPage.classList.add('active-page');
+            void targetPage.offsetWidth; 
+            targetPage.style.opacity = '1';
+            targetPage.style.transform = 'translateY(0)';
+
+            document.querySelectorAll('.nav-links a').forEach(nav => nav.classList.remove('active-nav'));
+            const currentNav = document.getElementById(`nav-${pageId}`);
+            if (currentNav) currentNav.classList.add('active-nav');
+
+            if (pageId === 'about') setTimeout(animateNumbers, 200);
+        }
+
+        function toggleArticleFocus(cardId) {
+            playSuccessSound();
+            const grid = document.getElementById('articlesGrid');
+            const card = document.getElementById(cardId);
+            const buttonSpan = card.querySelector('.read-btn span');
+
+            if (card.classList.contains('focused')) {
+                card.classList.remove('focused');
+                grid.classList.remove('focus-active');
+                buttonSpan.innerText = "فك التشفير واقرأ";
+                document.body.style.overflow = 'auto';
+            } else {
+                grid.classList.add('focus-active');
+                card.classList.add('focused');
+                buttonSpan.innerText = "إغلاق المقال والعودة";
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        const words = [
+            "فضل عبدالله مثنى الشعيبي...", 
+            "أول مطور يمني يحمل مشاريع تقنية عملاقة...", 
+            "الذكاء الاصطناعي والبرمجيات هي التي ستحكم العالم...", 
+            "هدفي تأسيس شركة تقنية عالمية والسفر حول الأرض."
+        ];
+        let wordIndex = 0, charIndex = 0, isDeleting = false;
+        
+        function startTypewriter() {
+            const textElement = document.getElementById("typeText");
+            if (!textElement) return;
+            
+            const currentWord = words[wordIndex];
+            if (isDeleting) {
+                textElement.innerText = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.innerText = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let speed = isDeleting ? 25 : 60;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                speed = 2500;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                speed = 350;
+            }
+            setTimeout(startTypewriter, speed);
+        }
+
+        function animateNumbers() {
+            if(numbersAnimated) return;
+            numbersAnimated = true;
+            const runCounter = (id, start, end, prefix = "+") => {
+                let current = start;
+                const increment = Math.ceil(end / 40);
+                const obj = document.getElementById(id);
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= end) {
+                        obj.innerHTML = prefix + end.toLocaleString();
+                        clearInterval(timer);
+                    } else {
+                        obj.innerHTML = prefix + current.toLocaleString();
+                    }
+                }, 30);
+            };
+            runCounter("stat1", 0, 15000);
+            runCounter("stat2", 0, 1200);
+            runCounter("stat3", 0, 7, "🌍 ");
+        }
+        let numbersAnimated = false;
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkLogin();
+        });
+    </script>
+</body>
+</html>
+    
+  </body>
+  
+</html>
